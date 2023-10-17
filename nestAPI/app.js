@@ -32,7 +32,28 @@ app.post('/board', (req, res) => {
     };
     boardList.push(board);
     res.json(board);
+    res.redirect('/board');
 });
+
+app.put('/board/:id', (req, res) => {
+    const findItem = boardList.find(item => {
+        return item.id === +req.params.id;
+    });
+
+    const idx = boardList.indexOf(findItem);
+    boardList.splice(idx, 1, {
+        id: findItem.id,
+        title: req.body.title,
+        content: req.body.content,
+        date: new Date(),
+        user_id: req.body.user_id
+    });
+
+    res.json(boardList);
+    res.redirect('/board');
+    
+});
+
 
 
 app.listen(app.get('port'), () => {
