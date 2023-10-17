@@ -22,6 +22,19 @@ app.get('/board', (req, res) => {
     res.json(boardList);
 });
 
+app.post('/board', (req, res) => {
+    const board = {
+        id: ++numOfBoards,
+        title: req.body.title,
+        content: req.body.content,
+        date: new Date(),
+        user_id: req.body.user_id
+    };
+    boardList.push(board);
+    res.json(board);
+});
+
+
 app.listen(app.get('port'), () => {
     console.log('Express server listening on port ' + app.get('port'));
 });
