@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>AddressBook Vue.js</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+	<div class="container w-75 mx-auto mt-5">
+		<H2>AddressBook::List</H2>
+		<HR>
+		<a href="" class="btn btn-info">New Entry</a>
+		<P>
+		<div id="app">
+			<table class="table table-hover table-striped">
+				<thead class="thead-dark">
+					<tr>
+						<th>#No</th>
+						<th>name</th>
+						<th>e-mail</th>
+						<th>Gender</th>
+						<th>phone</th>
+						<th>date</th>
+					</tr>
+				</thead>
+				<tbody>
+				  <tr v-for="ab in datas">
+					<td><a href="">{{ab.contactId}}</a></td>
+					<td>{{ab.name}}</td>
+					<td>{{ab.email}}</td>
+					<td>{{ab.phone}}</td>
+					<td>{{ab.gender}}</td>
+					<td>{{ab.register_date}}</td>
+				  </tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script>          
+                var ex = new Vue( {
+                    el: '#app',
+                    data: { 
+                        datas: []
+                    },
+                    computed: {
+                    hasResult: function () {
+                        return this.posts.length > 0
+                    }
+                    },
+                    created: function(){
+                        const baseURI = 'http://127.0.0.1:8000';
+                        axios.get(`${baseURI}/contacts`)
+                        .then((result) => {
+                        console.log(result)
+                        this.datas = result.data
+                        }
+                    )}
+                });
+            </script>
+</body>
+</html>
